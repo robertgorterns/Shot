@@ -8,14 +8,14 @@ buildscript {
   }
   dependencies {
     classpath "com.neenbedankt.gradle.plugins:android-apt:1.7"
-    classpath "com.karumi:shot:5.14.0"
+    classpath "com.karumi:shot:5.14.1"
     classpath "com.trevjonez.composer:plugin:1.0.0-rc08"
   }
 }
 
 apply plugin: "com.android.application"
 apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-parcelize"
 apply plugin: "com.trevjonez.composer"
 apply plugin: "shot"
 
@@ -33,6 +33,9 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_11
         sourceCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
     buildTypes {
         release {
@@ -103,5 +106,5 @@ tasks.register("ktlintFormat", JavaExec) {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.AbstractKotlinCompile).configureEach {
-    kotlinOptions.freeCompilerArgs += ["-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+    kotlinOptions.freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
 }
